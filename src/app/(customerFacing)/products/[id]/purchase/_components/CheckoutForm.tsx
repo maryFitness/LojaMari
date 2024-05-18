@@ -34,8 +34,8 @@ export default function CheckoutForm({ product }: CheckoutFormProps) {
 
   return (
     <div className="max-w-5xl w-full mx-auto space-y-8">
-    <div className="flex gap-4 items-center">
-        <div className="aspect-square flex-shrink-0 w-1/3 relative">
+   <div className="flex flex-col lg:flex-row gap-10 items-center">
+        <div className="aspect-square flex-shrink-0 w-full lg:w-1/3 relative">
             <EmblaCarousel slides={images} options={OPTIONS} />
         </div>
         <div>
