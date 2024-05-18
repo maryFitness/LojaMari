@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  xata_id                String                 @unique(map: "_pgroll_new_Product_xata_id_key") @default(dbgenerated("('rec_'::text || (xata_private.xid())::text)"))
+  name                   String
+  priceInCents           Int
+  description            String
+  isAvailableForPurchase Boolean                @default(true)
+  xata_version           Int                    @default(0)
+  xata_createdat         DateTime               @default(now()) @db.Timestamptz(6)
+  xata_updatedat         DateTime               @default(now()) @db.Timestamptz(6)
+  tags                   String[]
+  downloadVerifications  DownloadVerification[]
+  orders                 Order[]
+  images                 ProductImage[]
+}
+
+model ProductImage {
+  xata_id        String   @unique(map: "_pgroll_new_ProductImage_xata_id_key") @default(dbgenerated("('rec_'::text || (xata_private.xid())::text)"))
+  imagePath      String
+  productId      String
+  xata_version   Int      @default(0)
+  xata_createdat DateTime @default(now()) @db.Timestamptz(6)
+  xata_updatedat DateTime @default(now()) @db.Timestamptz(6)
+  product        Product  @relation(fields: [productId], references: [xata_id], onDelete: Cascade)
+}
+
+model User {
+  xata_createdat DateTime @default(now()) @db.Timestamptz(6)
+  xata_updatedat DateTime @default(now()) @db.Timestamptz(6)
+  xata_id        String   @unique(map: "_pgroll_new_User_xata_id_key") @default(dbgenerated("('rec_'::text || (xata_private.xid())::text)"))
+  email          String   @unique
+  xata_version   Int      @default(0)
+  orders         Order[]
+}
+
+model Order {
+  xata_id          String   @unique(map: "_pgroll_new_Order_xata_id_key") @default(dbgenerated("('rec_'::text || (xata_private.xid())::text)"))
+  pricePaidInCents Int
+  xata_version     Int      @default(0)
+  xata_createdat   DateTime @default(now()) @db.Timestamptz(6)
+  xata_updatedat   DateTime @default(now()) @db.Timestamptz(6)
+  userId           String
+  productId        String
+  product          Product  @relation(fields: [productId], references: [xata_id])
+  user             User     @relation(fields: [userId], references: [xata_id], onDelete: Cascade)
+}
+
+model DownloadVerification {
+  xata_version   Int      @default(0)
+  xata_createdat DateTime @default(now()) @db.Timestamptz(6)
+  xata_updatedat DateTime @default(now()) @db.Timestamptz(6)
+  xata_id        String   @unique(map: "_pgroll_new_DownloadVerification_xata_id_key") @default(dbgenerated("('rec_'::text || (xata_private.xid())::text)"))
+  expiresAt      DateTime
+  productId      String
+  product        Product  @relation(fields: [productId], references: [xata_id], onDelete: Cascade)
+}
