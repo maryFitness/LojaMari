@@ -3,7 +3,7 @@ import Uploader from "@/components/form/Uploader";
 export default function page() {
   return (
     <div>
-        <Uploader />
+            <h1>development</h1>
     </div>
   )
 }
