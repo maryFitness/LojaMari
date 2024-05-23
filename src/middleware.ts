@@ -4,7 +4,7 @@ import {
 } from '@clerk/nextjs/server';
 
 const isTenantRoute = createRouteMatcher([
-  '/products/[id](.*)'
+  '/products(.*)'
 ])
 
 const isTenantAdminRoute = createRouteMatcher([
