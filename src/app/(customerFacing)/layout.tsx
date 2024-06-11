@@ -3,7 +3,6 @@ import { Nav, NavLink } from "@/components/Nav";
 import { UserButton } from "@clerk/nextjs";
 import { CartProvider } from "@/lib/CartContext";
 import  SlideCart  from "@/components/SlideCart"
-import { OrganizationSwitcher } from "@clerk/nextjs";
 
 export const dynamic = "force-dynamic";
 
@@ -23,7 +22,7 @@ export default function Layout({
                 </div>
                 <div className="grid grid-cols-2 ml-auto items-center gap-7">
                     <Cart />
-                    <OrganizationSwitcher />
+                    <UserButton />
                     <SlideCart />          
                 </div>
             </Nav>
